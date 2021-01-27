@@ -39,9 +39,78 @@ namespace ObjectsLoaneds.Controllers
                 return RedirectToAction("Index");           
             }
             return View(objectsLoaneds);
-        
-        
+               
         }
+        public async Task<IActionResult> Delete(int? id) 
+        {
+            if (id == null) 
+            { 
+                return NotFound();
+            }
+
+            var objects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (objects == null)
+            {
+                return NotFound();
+            }
+
+            return View(objects);             
+        }
+
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DeleteConfirmed(int id) 
+        { 
+            var objectDelete = await _context.ObjectsLoaneds.FindAsync(id);
+
+            _context.ObjectsLoaneds.Remove(objectDelete);
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction("Index");
+     
+        }
+
+        public async Task<IActionResult> Edit(int? id) 
+        {
+            if(id == null) 
+            {
+                return NotFound();
+            }
+
+            var editObjects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(editObjects == null) 
+            {
+                return NotFound();
+            }
+            
+            return View(editObjects);
+                   
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate")]
+        ObjectsLoanedsModel objectsLoaneds)
+        { 
+            if(id != objectsLoaneds.Id) 
+            {
+                return NotFound();
+            }
+            if (ModelState.IsValid) 
+            { 
+               
+                _context.Update(objectsLoaneds);
+                await _context.SaveChangesAsync();
+
+            }
+
+            return RedirectToAction("Index");
+
+        }
+
 
     }
 }

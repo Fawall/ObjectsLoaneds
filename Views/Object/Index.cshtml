@@ -7,22 +7,22 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" >Adicionar novo objeto</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.NamePeopleLoaned)
+                @Html.DisplayName("Para quem você emprestou?")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.NameObjectLoaned)
+                @Html.DisplayName("O que você emprestou?")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DateLoanedObject)
+                @Html.DisplayName("Quando você emprestou?")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.LimitDate)
+                @Html.DisplayName("Dia para a devolução do objeto")
             </th>
             <th></th>
         </tr>

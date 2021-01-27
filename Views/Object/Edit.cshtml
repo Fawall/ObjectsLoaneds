@@ -1,45 +1,47 @@
 ﻿@model ObjectsLoaneds.Models.ObjectsLoanedsModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 
-<h1>Adicionar novo objeto</h1>
+<h1>Edit</h1>
 
+<h4>ObjectsLoanedsModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="NamePeopleLoaned" class="control-label">Para quem foi emprestado</label>
+                <label asp-for="NamePeopleLoaned" class="control-label"></label>
                 <input asp-for="NamePeopleLoaned" class="form-control" />
                 <span asp-validation-for="NamePeopleLoaned" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="NameObjectLoaned" class="control-label">Objeto que foi emprestado</label>
+                <label asp-for="NameObjectLoaned" class="control-label"></label>
                 <input asp-for="NameObjectLoaned" class="form-control" />
                 <span asp-validation-for="NameObjectLoaned" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DateLoanedObject" class="control-label">Dia que você emprestou o objeto</label>
+                <label asp-for="DateLoanedObject" class="control-label"></label>
                 <input asp-for="DateLoanedObject" class="form-control" />
                 <span asp-validation-for="DateLoanedObject" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="LimitDate" class="control-label">Dia para a devolução do objeto</label>
+                <label asp-for="LimitDate" class="control-label"></label>
                 <input asp-for="LimitDate" class="form-control" />
                 <span asp-validation-for="LimitDate" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Criar" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Voltar para a lista</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {
