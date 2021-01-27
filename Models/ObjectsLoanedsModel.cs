@@ -14,6 +14,7 @@ namespace ObjectsLoaneds.Models
         public string NameObjectLoaned { get; set; }
         [DataType(DataType.Date)]
         public DateTime DateLoanedObject { get; set; }
+        [DataType(DataType.Date)]
         public DateTime LimitDate { get; set; }
 
 

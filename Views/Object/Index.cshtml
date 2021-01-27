@@ -1,0 +1,82 @@
+﻿@model IEnumerable<ObjectsLoaneds.Models.ObjectsLoanedsModel>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NamePeopleLoaned)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NameObjectLoaned)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DateLoanedObject)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.LimitDate)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+    int CompareData = DateTime.Compare(item.LimitDate, DateTime.Now);
+    
+    if(CompareData < 0) 
+    {
+        <tr class="alert alert-danger" role="alert">
+            <td>
+                @Html.DisplayFor(modelItem => item.NamePeopleLoaned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameObjectLoaned)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateLoanedObject)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LimitDate)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+
+    }
+    else
+    {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NamePeopleLoaned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NameObjectLoaned)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DateLoanedObject)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LimitDate)
+        </td>
+        <td>
+            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+        </td>
+    </tr>
+    }
+              
+}
+    </tbody>
+</table>
