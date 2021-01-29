@@ -1,0 +1,10 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Identity.EntityFrameworkCore
+
+@inject SignInManager<IdentityUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User)) 
+{ 
+    <li><a class="nav-link text-dark" asp-controller="Object" asp-action="Index">Objects</a></li>
+
+}

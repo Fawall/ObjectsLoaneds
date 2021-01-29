@@ -24,6 +24,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        @await Html.PartialAsync("./Components/ShowObjectNav/Default")
                     </ul>
                     @await Html.PartialAsync("_LoginPartial")
                 </div>

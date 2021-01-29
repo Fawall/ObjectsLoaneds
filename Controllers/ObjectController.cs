@@ -13,14 +13,15 @@ namespace ObjectsLoaneds.Controllers
     public class ObjectController : Controller
     {
         private readonly Context _context;
+       
         public ObjectController(Context context)
         {
-            _context = context;
+            _context = context;        
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
-        {
+        {        
             return View(await _context.ObjectsLoaneds.ToListAsync());
         }
 
