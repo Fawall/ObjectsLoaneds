@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ObjectsLoaneds.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 using ObjectsLoaneds.Models;
 using System;
 using System.Collections.Generic;
@@ -17,16 +18,18 @@ namespace ObjectsLoaneds.Controllers
             _context = context;
         }
 
+        [Authorize]
         public async Task<IActionResult> Index()
         {
             return View(await _context.ObjectsLoaneds.ToListAsync());
         }
 
+        [Authorize]
         public IActionResult Create() => View();
 
         [HttpPost]
+        [Authorize]
         [ValidateAntiForgeryToken]
-
         public async Task<IActionResult> Create(ObjectsLoanedsModel objectsLoaneds) 
         {
             if (ModelState.IsValid) 
@@ -41,6 +44,7 @@ namespace ObjectsLoaneds.Controllers
             return View(objectsLoaneds);
                
         }
+        [Authorize]
         public async Task<IActionResult> Delete(int? id) 
         {
             if (id == null) 
@@ -60,6 +64,7 @@ namespace ObjectsLoaneds.Controllers
 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize]
 
         public async Task<IActionResult> DeleteConfirmed(int id) 
         { 
@@ -72,6 +77,7 @@ namespace ObjectsLoaneds.Controllers
      
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int? id) 
         {
             if(id == null) 
@@ -92,6 +98,7 @@ namespace ObjectsLoaneds.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate")]
         ObjectsLoanedsModel objectsLoaneds)
         { 

@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 using ObjectsLoaneds.Data;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,9 @@ namespace ObjectsLoaneds
         {
             services.AddDbContext<Context>(x => x.UseSqlServer
             (Configuration.GetConnectionString("DefaultConnection")));
+            services.AddIdentity<IdentityUser, IdentityRole>()
+                .AddEntityFrameworkStores<Context>()
+                .AddDefaultTokenProviders(); 
             services.AddControllersWithViews();
         }
 
@@ -46,6 +51,7 @@ namespace ObjectsLoaneds
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseAuthentication();
 
             app.UseRouting();
 
