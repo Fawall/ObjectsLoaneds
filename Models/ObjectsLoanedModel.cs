@@ -1,15 +1,17 @@
-﻿using System;
+﻿using ObjectsLoaneds.Data;
+using System;
 using System.ComponentModel.DataAnnotations;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace ObjectsLoaneds.Models
 {
-    public class ObjectsLoanedsModel
+    public class ObjectsLoanedModel 
     {
-
-        public int Id { get; set; }
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int ObjectId { get; set; }
         
         [Required(ErrorMessage = "Insira o nome da pessoa para quem você emprestou")]
         public string NamePeopleLoaned { get; set; }
@@ -17,10 +19,13 @@ namespace ObjectsLoaneds.Models
         public string NameObjectLoaned { get; set; }
         [DataType(DataType.Date)]        
         public DateTime DateLoanedObject { get; set; }
-        [DataType(DataType.Date)]
-        
+        [DataType(DataType.Date)]        
         public DateTime LimitDate { get; set; }
-
+        public virtual ApplicationUser User { get; set; }
+        public string UserId { get; set; }
 
     }
+
+  
+
 }
