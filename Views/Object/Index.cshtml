@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ObjectsLoaneds.Models.ObjectsLoanedsModel>
+﻿@model IEnumerable<ObjectsLoaneds.Models.ObjectsLoanedModel>
 
 @{
     ViewData["Title"] = "Index";
@@ -47,9 +47,9 @@
                 @Html.DisplayFor(modelItem => item.LimitDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ObjectId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.ObjectId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.ObjectId">Delete</a>
             </td>
         </tr>
 
@@ -70,9 +70,9 @@
             @Html.DisplayFor(modelItem => item.LimitDate)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+            <a asp-action="Edit" asp-route-id="@item.ObjectId">Edit</a> |
+            <a asp-action="Details" asp-route-id="@item.ObjectId">Details</a> |
+            <a asp-action="Delete" asp-route-id="@item.ObjectId">Delete</a>
         </td>
     </tr>
     }
