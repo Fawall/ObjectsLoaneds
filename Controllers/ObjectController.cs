@@ -2,37 +2,54 @@
 using ObjectsLoaneds.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using ObjectsLoaneds.Models;
+using ObjectsLoaneds.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace ObjectsLoaneds.Controllers
 {
     public class ObjectController : Controller
     {
-        private readonly Context _context;
-       
-        public ObjectController(Context context)
+        private readonly ApplicationDbContext _context;
+        
+        public ObjectController(ApplicationDbContext context)
         {
-            _context = context;        
+            _context = context;
+            
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
-        {        
-            return View(await _context.ObjectsLoaneds.ToListAsync());
-        }
+        {
+            var UserLogged =  User.FindFirstValue(ClaimTypes.NameIdentifier);
 
+            return View(await _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged)).ToListAsync());
+        }
         [Authorize]
         public IActionResult Create() => View();
 
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(ObjectsLoanedsModel objectsLoaneds) 
+        public async Task<IActionResult> Create(ObjectsLoanedModel objectsLoaneds) 
         {
+            var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            objectsLoaneds = new ObjectsLoanedModel 
+            { 
+              NameObjectLoaned = objectsLoaneds.NameObjectLoaned,
+              NamePeopleLoaned = objectsLoaneds.NamePeopleLoaned,
+              DateLoanedObject = objectsLoaneds.DateLoanedObject,
+              LimitDate = objectsLoaneds.LimitDate,
+              UserId = currentUser,
+
+            };
+
             if (ModelState.IsValid) 
             {
                 await _context.ObjectsLoaneds.AddAsync(objectsLoaneds);
@@ -53,7 +70,7 @@ namespace ObjectsLoaneds.Controllers
                 return NotFound();
             }
 
-            var objects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.Id == id);
+            var objects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.ObjectId == id);
 
             if (objects == null)
             {
@@ -86,7 +103,7 @@ namespace ObjectsLoaneds.Controllers
                 return NotFound();
             }
 
-            var editObjects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.Id == id);
+            var editObjects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.ObjectId == id);
 
             if(editObjects == null) 
             {
@@ -101,9 +118,13 @@ namespace ObjectsLoaneds.Controllers
         [ValidateAntiForgeryToken]
         [Authorize]
         public async Task<IActionResult> Edit(int id, [Bind("Id, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate")]
-        ObjectsLoanedsModel objectsLoaneds)
-        { 
-            if(id != objectsLoaneds.Id) 
+        ObjectsLoanedModel objectsLoaneds)
+        {
+            var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            objectsLoaneds = new ObjectsLoanedModel { UserId = currentUser };
+
+            if (id != objectsLoaneds.ObjectId) 
             {
                 return NotFound();
             }

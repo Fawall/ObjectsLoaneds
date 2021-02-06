@@ -37,7 +37,7 @@ namespace ObjectsLoaneds.Controllers
                 return View(loginVM);
 
             var user = await _userManager.FindByNameAsync(loginVM.Username);
-
+           
             if(user != null) 
             {
                 var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
