@@ -3,6 +3,7 @@ using ObjectsLoaneds.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Caching.Memory;
 using ObjectsLoaneds.Models;
 using ObjectsLoaneds.ViewModels;
 using System;
@@ -16,19 +17,19 @@ namespace ObjectsLoaneds.Controllers
     public class ObjectController : Controller
     {
         private readonly ApplicationDbContext _context;
-        
-        public ObjectController(ApplicationDbContext context)
+        private readonly IMemoryCache _cache;
+        public ObjectController(ApplicationDbContext context, IMemoryCache cache)
         {
             _context = context;
-            
+            _cache = cache;
         }
 
         [Authorize]
         public async Task<IActionResult> Index()
         {
             var UserLogged =  User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            return View(await _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged)).ToListAsync());
+                       
+            return View(await _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged)).ToListAsync());            
         }
         [Authorize]
         public IActionResult Create() => View();
@@ -88,22 +89,22 @@ namespace ObjectsLoaneds.Controllers
         { 
             var objectDelete = await _context.ObjectsLoaneds.FindAsync(id);
 
-            _context.ObjectsLoaneds.Remove(objectDelete);
+            _context.ObjectsLoaneds.Remove(objectDelete);           
             await _context.SaveChangesAsync();
-
+                        
             return RedirectToAction("Index");
      
         }
 
         [Authorize]
-        public async Task<IActionResult> Edit(int? id) 
+        public async Task<IActionResult> Edit(int? Id) 
         {
-            if(id == null) 
+            if(Id == null) 
             {
                 return NotFound();
             }
 
-            var editObjects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.ObjectId == id);
+            var editObjects = await _context.ObjectsLoaneds.FirstOrDefaultAsync(x => x.ObjectId == Id);
 
             if(editObjects == null) 
             {
@@ -117,12 +118,12 @@ namespace ObjectsLoaneds.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize]
-        public async Task<IActionResult> Edit(int id, [Bind("Id, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate")]
+        public async Task<IActionResult> Edit(int id, [Bind("ObjectId, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate, UserId")]
         ObjectsLoanedModel objectsLoaneds)
         {
             var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            objectsLoaneds = new ObjectsLoanedModel { UserId = currentUser };
+            objectsLoaneds.UserId = currentUser;
 
             if (id != objectsLoaneds.ObjectId) 
             {

@@ -10,7 +10,7 @@ using ObjectsLoaneds.Data;
 namespace ObjectsLoaneds.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210201223227_Initial")]
+    [Migration("20210208032030_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -254,11 +254,11 @@ namespace ObjectsLoaneds.Migrations
                     b.ToTable("ObjectsLoaneds");
                 });
 
-            modelBuilder.Entity("ObjectsLoaneds.Models.User", b =>
+            modelBuilder.Entity("ObjectsLoaneds.Models.ApplicationUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.HasDiscriminator().HasValue("User");
+                    b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -314,14 +314,14 @@ namespace ObjectsLoaneds.Migrations
 
             modelBuilder.Entity("ObjectsLoaneds.Models.ObjectsLoanedModel", b =>
                 {
-                    b.HasOne("ObjectsLoaneds.Models.User", "User")
+                    b.HasOne("ObjectsLoaneds.Models.ApplicationUser", "User")
                         .WithMany("ObjectsLoaneds")
                         .HasForeignKey("UserId");
 
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("ObjectsLoaneds.Models.User", b =>
+            modelBuilder.Entity("ObjectsLoaneds.Models.ApplicationUser", b =>
                 {
                     b.Navigation("ObjectsLoaneds");
                 });

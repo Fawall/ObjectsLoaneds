@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+
 using ObjectsLoaneds.Data;
 
 namespace ObjectsLoaneds
@@ -27,7 +28,7 @@ namespace ObjectsLoaneds
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             
-    
+            services.AddMemoryCache();
             services.AddControllersWithViews();
             
             
