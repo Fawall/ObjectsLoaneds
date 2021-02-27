@@ -25,11 +25,14 @@ namespace ObjectsLoaneds.Controllers
         }
 
         [Authorize]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
             var UserLogged =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var list = _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged));
+            var orderList = list.OrderBy(x => x.LimitDate);
+            return View(orderList.ToList());
                        
-            return View(await _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged)).ToListAsync());            
+           
         }
         [Authorize]
         public IActionResult Create() => View();
