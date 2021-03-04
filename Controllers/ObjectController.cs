@@ -5,29 +5,30 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Caching.Memory;
 using ObjectsLoaneds.Models;
-using ObjectsLoaneds.ViewModels;
-using System;
+using Repository;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Claims;
+
 
 namespace ObjectsLoaneds.Controllers
 {
     public class ObjectController : Controller
     {
         private readonly ApplicationDbContext _context;
-        private readonly IMemoryCache _cache;
-        public ObjectController(ApplicationDbContext context, IMemoryCache cache)
+        private readonly IGetUserId _getUserId;
+
+        public ObjectController(ApplicationDbContext context, IGetUserId getUserId)
         {
             _context = context;
-            _cache = cache;
+            _getUserId = getUserId;
         }
 
         [Authorize]
         public IActionResult Index()
         {
-            var UserLogged =  User.FindFirstValue(ClaimTypes.NameIdentifier);
+            string UserLogged = _getUserId.GetCurrentUser();
             var list = _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged));
             var orderList = list.OrderBy(x => x.LimitDate);
             return View(orderList.ToList());
@@ -42,7 +43,7 @@ namespace ObjectsLoaneds.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ObjectsLoanedModel objectsLoaneds) 
         {
-            var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUser = _getUserId.GetCurrentUser();
 
             objectsLoaneds = new ObjectsLoanedModel 
             { 
@@ -124,7 +125,7 @@ namespace ObjectsLoaneds.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("ObjectId, NamePeopleLoaned, NameObjectLoaned, DateLoanedObject, LimitDate, UserId")]
         ObjectsLoanedModel objectsLoaneds)
         {
-            var currentUser = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var currentUser =_getUserId.GetCurrentUser();
 
             objectsLoaneds.UserId = currentUser;
 
