@@ -5,8 +5,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Http;
 
 using ObjectsLoaneds.Data;
+using Repository;
 
 namespace ObjectsLoaneds
 {
@@ -28,7 +30,10 @@ namespace ObjectsLoaneds
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
             
-            services.AddMemoryCache();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddScoped<IGetUserId, GetUserId>();
+
+            services.AddHttpContextAccessor();
             services.AddControllersWithViews();
             
             
