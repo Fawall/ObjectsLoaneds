@@ -1,0 +1,10 @@
+.user {
+    max-width: 35px;
+    max-height: 45px;
+    margin-right: 20px;
+}
+  .logout {
+    color: inherit;
+    text-decoration: none
+}
+  

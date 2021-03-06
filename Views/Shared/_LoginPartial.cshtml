@@ -3,14 +3,27 @@
 
 @inject SignInManager<IdentityUser> SignInManager
 
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="~/css/userDropdown.css" />
+</head>
+
+
 @if (SignInManager.IsSignedIn(User))
 {
-    <form asp-area="" asp-controller="Account" asp-action="Logout" id="logoutForm"
-          method="post" class="navbar-right">
-        <ul class="nav navbar-nav navbar-right">
-            <a href="javascript:document.getElementById('logoutForm').submit()">Logoff</a>
-        </ul>
-    </form>
+    <div class="dropdown" >              
+        <img src="~/images/user-flat.svg" class="user dropdown-toggle " role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">            
+            <form asp-area="" asp-controller="Account" asp-action="Logout" 
+            id="logoutForm" method="POST">
+                <ul class="dropdown-item">
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="logout">Logout</a>
+                </ul>    
+            </form>                                 
+        </div>
+    </div>
 }
 else
 {

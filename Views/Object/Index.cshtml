@@ -30,13 +30,9 @@
     <tbody>
 @foreach (var item in Model) {
     int CompareData = DateTime.Compare(item.LimitDate, DateTime.Now);
-
-    
+   
     if(CompareData < 0) 
     {
-  
-
-
         <tr class="alert alert-danger" role="alert">
             <td>
                 @Html.DisplayFor(modelItem => item.NamePeopleLoaned)
@@ -51,12 +47,10 @@
                 @Html.DisplayFor(modelItem => item.LimitDate)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ObjectId">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ObjectId">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ObjectId">Delete</a>
+                <a asp-action="Edit" asp-route-id="@item.ObjectId">Editar</a> |
+                <a asp-action="Delete" asp-route-id="@item.ObjectId">Deletar</a>           
             </td>
-        </tr>
-        
+        </tr>      
     }
     else
     {
@@ -74,13 +68,11 @@
             @Html.DisplayFor(modelItem => item.LimitDate)
         </td>
         <td>
-            <a asp-action="Edit" asp-route-id="@item.ObjectId">Edit</a> |
-            <a asp-action="Details" asp-route-id="@item.ObjectId">Details</a> |
-            <a asp-action="Delete" asp-route-id="@item.ObjectId">Delete</a>
+            <a asp-action="Edit" asp-route-id="@item.ObjectId">Editar</a> |
+            <a asp-action="Delete" asp-route-id="@item.ObjectId">Deletar</a>
         </td>
     </tr>
-    }
-              
+    } 
 }
     </tbody>
 </table>
