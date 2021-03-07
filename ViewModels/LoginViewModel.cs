@@ -9,6 +9,11 @@ namespace ObjectsLoaneds.ViewModels
 {
     public class LoginViewModel
     {
+
+        [Required]
+        [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "E-mail em formato inválido")]
+        public string Email {get; set;}
         
         [Required]
         [Display(Name = "Usuário")]
