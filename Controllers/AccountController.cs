@@ -67,15 +67,13 @@ namespace ObjectsLoaneds.Controllers
         {
             if (ModelState.IsValid) 
             {
-                var user = new IdentityUser() { UserName = registroVM.Username, Email = registroVM.Email };
+                var user = new IdentityUser() { UserName = registroVM.Username };
                 var result = await _userManager.CreateAsync(user, registroVM.Password);
 
                 if (result.Succeeded) 
                 {
-                    await _signInManager.SignInAsync(user,isPersistent:false);
                     return RedirectToAction("Index", "Home");
                 }
-                                   
                 ModelState.AddModelError("Password", "A senha precisa ter : Caracteres especiais" +
                     " Letras maiusculas e números");
             }
