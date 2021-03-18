@@ -29,8 +29,9 @@ namespace ObjectsLoaneds.Controllers
         public IActionResult Index()
         {
             string UserLogged = _getUserId.GetCurrentUser();
-            var list = _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged));
+            var list = _context.ObjectsLoaneds.Where(x => x.UserId.Contains(UserLogged)).AsNoTracking() ;
             var orderList = list.OrderBy(x => x.LimitDate);
+            
             return View(orderList.ToList());
                        
            
